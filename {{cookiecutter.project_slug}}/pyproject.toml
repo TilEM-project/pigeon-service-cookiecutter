@@ -1,0 +1,13 @@
+[project]
+name = "{{ cookiecutter.project_slug }}"
+version = "0.1.0"
+dependencies = [
+    "pigeon-client",
+]
+requires-python = ">=3.10"
+authors = [
+    {name="{{ cookiecutter.author_name }}", email="{{ cookiecutter.author_email }}"}
+]
+description = "{{ cookiecutter.short_description }}"
+[project.scripts]
+{{ cookiecutter.project_slug }} = "{{ cookiecutter.project_slug }}.__main__:main"

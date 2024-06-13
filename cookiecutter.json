@@ -1,0 +1,9 @@
+{
+  "project_name": "Robot Service",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "author_name": "Cameron Devine",
+  "author_email": "cameron.devine@alleninstitute.org",
+  "short_description": "A service that runs the robot.",
+  "docker_hub_owner": "camerondevine",
+  "docker_tag": "{{ cookiecutter.docker_hub_owner }}/{{ cookiecutter.project_slug }}"
+}

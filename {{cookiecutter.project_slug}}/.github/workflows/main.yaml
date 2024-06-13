@@ -1,0 +1,24 @@
+name: main
+
+on: push
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          tags: {{ cookiecutter.project_slug }}
+      - name: test
+        run: docker run -t --rm {{ cookiecutter.project_slug }} bash -c "pip install pytest pytest-mock && pytest /{{ cookiecutter.project_slug }}/"
+      - name: push
+        if: {{ "${{ github.ref == 'refs/heads/master' }}" }}
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          tags: {{ cookiecutter.docker_tag }}
+          push: true
