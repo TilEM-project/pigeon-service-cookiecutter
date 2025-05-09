@@ -1,9 +1,11 @@
 {
   "project_name": "Robot Service",
+  "project_dir": "{{ cookiecutter.project_name.replace(' ', '_') }}",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "class_name": "{{ cookiecutter.project_name.replace('_', '').replace('-', '').replace(' ', '') }}",
   "author_name": "Cameron Devine",
   "author_email": "cameron.devine@alleninstitute.org",
   "short_description": "A service that runs the robot.",
-  "docker_hub_owner": "camerondevine",
-  "docker_tag": "{{ cookiecutter.docker_hub_owner }}/{{ cookiecutter.project_slug }}"
+  "docker_hub_owner": "tilem",
+  "docker_image_name": "{{ cookiecutter.docker_hub_owner }}/{{ cookiecutter.project_slug }}"
 }

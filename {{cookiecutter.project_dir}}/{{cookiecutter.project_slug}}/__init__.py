@@ -1,20 +1,19 @@
 from pigeon import Pigeon
-from pigeon.logging import setup_logging
 import time
+import logging
 
 
-class Service:
+class {{ cookiecutter.class_name }}:
     def __init__(
         self,
         host: str = "127.0.0.1",
         port: int = 61616,
         username: str = None,
         password: str = None,
+        logger: logging.Logger = None,
     ):
-        self._logger = setup_logging("{{ cookiecutter.project_slug }}")
-        self.connection = Pigeon(
-            "{{ cookiecutter.project_slug }}", host=host, port=port, logger=self._logger
-        )
+        self._logger = logger if logger is not None else logging.getLogger(__name__)
+        self.connection = Pigeon("{{ cookiecutter.project_slug }}", host=host, port=port)
         self.connection.connect(username=username, password=password)
         self.connection.subscribe("example.message", self.example_callback)
 

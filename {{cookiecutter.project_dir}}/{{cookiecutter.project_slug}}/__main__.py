@@ -1,5 +1,6 @@
-from . import Service
+from . import {{ cookiecutter.class_name }}
 import argparse
+from pigeon.utils import setup_logging
 
 
 def main():
@@ -19,10 +20,12 @@ def main():
 
     args = parser.parse_args()
 
-    service = Service(
+    setup_logging()
+
+    {{ cookiecutter.project_slug }} = {{ cookiecutter.class_name }}(
         host=args.host, port=args.port, username=args.username, password=args.password
     )
-    service.run()
+    {{ cookiecutter.project_slug }}.run()
 
 
 if __name__ == "__main__":

@@ -1,0 +1,37 @@
+name: {{ cookiecutter.project_name }} CI
+
+on: [push, pull_request]
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          tags: {{ cookiecutter.docker_image_name }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          load: true
+      - name: Test
+        run: docker run --rm -v $(pwd):/{{ cookiecutter.project_slug}} {{ cookiecutter.docker_image_name }} bash -c "pip install /{{ cookiecutter.project_slug }}[test] && pytest /{{ cookiecutter.project_slug }}/"
+      - name: Login
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: docker/login-action@v3
+        with:
+          username: {{ cookiecutter.docker_hub_owner }}
+          password: {{ "${{ secrets.DOCKER_TOKEN }}" }}
+      - name: Push
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            {{ cookiecutter.docker_hub_owner }}/{{ cookiecutter.docker_image_name }}:latest
+            {{ cookiecutter.docker_hub_owner }}/{{ cookiecutter.docker_image_name }}:{{ "${{ github.ref_name }}" }}
