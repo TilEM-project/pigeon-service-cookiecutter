@@ -17,7 +17,7 @@ class {{ cookiecutter.class_name }}:
         self.connection.connect(username=username, password=password)
         self.connection.subscribe("example.message", self.example_callback)
 
-    def example_callback(self, topic, msg):
+    def example_callback(self, msg):
         self._logger.info(msg)
 
     def send_message(self):
