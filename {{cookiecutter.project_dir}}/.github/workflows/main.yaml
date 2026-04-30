@@ -33,5 +33,5 @@ jobs:
           context: .
           push: true
           tags: |
-            {{ cookiecutter.docker_hub_owner }}/{{ cookiecutter.docker_image_name }}:latest
-            {{ cookiecutter.docker_hub_owner }}/{{ cookiecutter.docker_image_name }}:{{ "${{ github.ref_name }}" }}
+            {{ cookiecutter.docker_image_name }}:latest
+            {{ cookiecutter.docker_image_name }}:{{ "${{ github.ref_name }}" }}
